@@ -65,8 +65,8 @@ for gi=1:length(allpath)
 end
  
 
-for gi=1:length(allpath)
-	for gj=1:length(allpath{gi})
+for gi=1%:length(allpath)
+	for gj=4:length(allpath{gi})
 		path=allpath{gi}{gj};
 		disp(path)
         s=strsplit(path,'Nuclei_and_Cells_');
@@ -126,8 +126,8 @@ for position = coordinates(:,1)'  % intersect(PZ{gi}{gj},coordinates(:,1)')     
  
 end
 
-%[size(Repeat_centroids), size(Repeat_surfaces),]
-%[~,ia]=unique(Repeat_centroids,'rows');
+[size(Repeat_centroids), size(Repeat_surfaces),]
+[~,ia]=unique(Repeat_centroids,'rows');
 
 ia=RemoveBadcell(Repeat_centroids);
 
@@ -256,6 +256,7 @@ function goodcellindex=RemoveBadcell(centroid)
         d=10;
         count=1;
         
+        edges=[];
         for i=1:n
             main=centroid(i,:);
             index=find(((main(1)-d)<=centroid(:,1)) & ((main(1)+d)>=centroid(:,1)) & ((main(2)-d)<=centroid(:,2)) & ((main(2)+d)>=centroid(:,2) ) & ((main(3)-d)<=centroid(:,3)) & ((main(3)+d)>=centroid(:,3) )    );
@@ -271,18 +272,20 @@ function goodcellindex=RemoveBadcell(centroid)
             end    
         end
 
-
-         [~,ia]=unique(edges,'rows');
-         edges=edges(ia,:);
-         badcell=unique(edges(:));
-         clear oneBadIsGood
-         LCCall=LargestConnectedComponents(edges);
-         for i=1:length(LCCall)
-             oneBadIsGood(i)=LCCall{i}(1);
+         if size(edges,1)>0
+             [~,ia]=unique(edges,'rows');
+             edges=edges(ia,:);
+             badcell=unique(edges(:));
+             clear oneBadIsGood
+             LCCall=LargestConnectedComponents(edges);
+             for i=1:length(LCCall)
+                 oneBadIsGood(i)=LCCall{i}(1);
+             end
+             only_goodcellindex= setdiff([1:size(centroid,1)]', badcell);
+             goodcellindex=union(only_goodcellindex,oneBadIsGood);
+         else
+             goodcellindex=[1:size(centroid,1)]';
          end
-         only_goodcellindex= setdiff([1:size(centroid,1)]', badcell);
-         goodcellindex=union(only_goodcellindex,oneBadIsGood);
-
 
 end
 
