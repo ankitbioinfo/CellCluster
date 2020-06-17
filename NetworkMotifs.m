@@ -79,16 +79,28 @@ for gi=1:length(allpath)
         edges=edges(ia,:);
         disp('start LCC')
         [LCCall,degree,graphlet]=LargestConnectedComponents(edges);
-        save(['degree_of_the_column/graphlet_',s{2}(1:strlength(s{2})-1),'.mat'],'graphlet');
+        
+         
+          directory=strcat('degree_of_the_column/Graphlet/');
+          if ~exist([directory],'dir')
+                  mkdir([directory]);
+          end
+        
+        save([directory,'graphlet_',s{2}(1:strlength(s{2})-1),'.mat'],'graphlet');
         
       
-%         fid=fopen(['degree_of_the_column/degree_',s{2}(1:strlength(s{2})-1),'.dat'],'w');
-%         for i=1:length(degree)
-%             for j=1:length(degree{i})
-%                 fprintf(fid,'%d ',degree{i}(j));
-%             end
-%             fprintf(fid,'\n');
-%         end
+          directory=strcat('degree_of_the_column/degree_sequence/');
+          if ~exist([directory],'dir')
+                  mkdir([directory]);
+          end
+          
+        fid=fopen([directory,'degree_',s{2}(1:strlength(s{2})-1),'.dat'],'w');
+        for i=1:length(degree)
+            for j=1:length(degree{i})
+                fprintf(fid,'%d ',degree{i}(j));
+            end
+            fprintf(fid,'\n');
+        end
        
         
         
