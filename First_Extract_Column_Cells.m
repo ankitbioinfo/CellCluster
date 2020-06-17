@@ -65,8 +65,8 @@ for gi=1:length(allpath)
 end
  
 
-for gi=1%:length(allpath)
-	for gj=4:length(allpath{gi})
+for gi=2:length(allpath)
+	for gj=1:length(allpath{gi})
 		path=allpath{gi}{gj};
 		disp(path)
         s=strsplit(path,'Nuclei_and_Cells_');
@@ -126,10 +126,9 @@ for position = coordinates(:,1)'  % intersect(PZ{gi}{gj},coordinates(:,1)')     
  
 end
 
-[size(Repeat_centroids), size(Repeat_surfaces),]
-[~,ia]=unique(Repeat_centroids,'rows');
 
 ia=RemoveBadcell(Repeat_centroids);
+[size(Repeat_centroids,1), size(ia,1)]
 
 centroid=Repeat_centroids(ia,:);
 nuc=Repeat_surfaces(ia,:);
