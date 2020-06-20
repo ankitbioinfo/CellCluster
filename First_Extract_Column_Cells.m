@@ -65,7 +65,7 @@ for gi=1:length(allpath)
 end
  
 
-for gi=2:length(allpath)
+for gi=4:length(allpath)
 	for gj=1:length(allpath{gi})
 		path=allpath{gi}{gj};
 		disp(path)
@@ -127,8 +127,8 @@ for position = coordinates(:,1)'  % intersect(PZ{gi}{gj},coordinates(:,1)')     
 end
 
 
-ia=RemoveBadcell(Repeat_centroids);
-[size(Repeat_centroids,1), size(ia,1)]
+ ia=RemoveBadcell(Repeat_centroids);
+ [size(Repeat_centroids,1), size(ia,1)]
 
 centroid=Repeat_centroids(ia,:);
 nuc=Repeat_surfaces(ia,:);
@@ -291,7 +291,6 @@ end
 
 
 function LCC=LargestConnectedComponents(edges)
-        
         cellIds=unique(edges(:));
         for j=1:length(cellIds)
             old2new(cellIds(j),1)=j;
@@ -299,7 +298,7 @@ function LCC=LargestConnectedComponents(edges)
         end
         [length(old2new),length(new2old),length(cellIds)];
 
-        for i=1:length(edges)
+        for i=1:size(edges,1)
             for j=1:2 
                 newedgename(i,j)= old2new(edges(i,j));
             end
